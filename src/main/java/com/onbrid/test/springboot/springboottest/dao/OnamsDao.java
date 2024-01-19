@@ -2,6 +2,7 @@ package com.onbrid.test.springboot.springboottest.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@DependsOn(value = {"onamsSqlSession"})
 public abstract class OnamsDao {
 
     protected static String NAMESPACE = "sql-mapper.";
 
     SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public OnamsDao(@Qualifier("onamsSqlSession") SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+    }
 
     public  int delete(String sqlId)
     {

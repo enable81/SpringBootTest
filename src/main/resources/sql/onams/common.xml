@@ -10,14 +10,6 @@
 
         SELECT *
         FROM   COMM
-        <where>
-            <if test="UNIVNO != null and UNIVNO != ''">
-                AND UNIVNO = #{UNIVNO}
-            </if>
-            <if test="COMMNO != null and COMMNO != ''">
-                AND COMMNO = #{COMMNO}
-            </if>
-        </where>
     </select>
 
 </mapper>

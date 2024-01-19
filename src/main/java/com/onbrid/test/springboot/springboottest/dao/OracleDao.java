@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class OracleDao extends OnamsDao {
 
     @Autowired
     public OracleDao(@Qualifier("oracleSqlSession") SqlSessionTemplate sqlSessionTemplate) {
-        this.sqlSessionTemplate = sqlSessionTemplate;
+        super(sqlSessionTemplate);
     }
 
 
@@ -25,8 +26,10 @@ public class OracleDao extends OnamsDao {
     public List customMethod() {
         // 어떤 작업...
         log.debug("Dao Custom Method");
+        Map param = new HashMap();
+        param.put("COMMNO", "00001");
 
-        return sqlSessionTemplate.selectList(NAMESPACE + "SELECT_COMM_TEST");
+        return sqlSessionTemplate.selectList(NAMESPACE + "SELECT_COMM_TEST", param);
     }
 
 }
