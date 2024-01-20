@@ -15,20 +15,32 @@ import java.util.Map;
 @Repository
 @DependsOn(value = {"mariaSqlSession"})
 @Slf4j
+@Profile(value = {"db-maria"})
 public class MariaDao extends OnamsDao {
 
     @Autowired
     public MariaDao(@Qualifier("mariaSqlSession") SqlSessionTemplate sqlSessionTemplate) {
         super(sqlSessionTemplate);
+        log.debug("Maria Dao init...");
     }
 
+
+    @Override
+    public List queryForList(String sqlId) {
+        log.debug("Maria Dao.queryForList");
+        return sqlSessionTemplate.selectList(NAMESPACE + sqlId);
+    }
 
     public List customMethod() {
         // 어떤 작업...
-        log.debug("Dao Custom Method");
+        log.debug("MariaDao Custom Method");
+
         Map param = new HashMap();
         param.put("COMMNO", "00001");
-        return null; // sqlSessionTemplate.selectList(NAMESPACE + "SELECT_COMM_TEST");
+        return sqlSessionTemplate.selectList(NAMESPACE + "SELECT_COMM_TEST", param);
     }
+
+
+
 
 }

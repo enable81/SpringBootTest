@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource("classpath:onams-${spring.profiles.active}.properties")
+@PropertySource("classpath:config/onams-${spring.profiles.active}.properties")
 public class MariaDataSourceConfig {
 
     @Bean(name = "mariaDataSource")

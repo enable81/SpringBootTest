@@ -6,7 +6,7 @@
 
     <!-- 공통조회 테스트 -->
     <select id="SELECT_COMM_TEST" resultType="java.util.HashMap">
-        /*  SELECT_COMM_TEST  */
+        /*  SELECT_COMM_TEST_ORACLE  */
 
         SELECT *
         FROM   COMM
@@ -16,6 +16,9 @@
             </if>
             <if test="COMMNO != null and COMMNO != ''">
                 AND COMMNO = #{COMMNO}
+            </if>
+            <if test="0 == 0">
+                AND COMMNO = '00001'
             </if>
         </where>
     </select>
