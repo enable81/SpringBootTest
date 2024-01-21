@@ -26,7 +26,7 @@ public class OnamsDataSourceConfig {
 
     @Primary
     @Bean(name = "onamsDataSource")
-    @ConfigurationProperties(prefix = "spring.onams.datasource.hikari")
+    @ConfigurationProperties(prefix = "sprin.datasource.hikari.onams")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }

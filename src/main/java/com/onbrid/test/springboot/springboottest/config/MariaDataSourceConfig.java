@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 public class MariaDataSourceConfig {
 
     @Bean(name = "mariaDataSource")
-    @ConfigurationProperties(prefix = "spring.maria.datasource.hikari")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.maria")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }

@@ -23,7 +23,7 @@ public class OracleDataSourceConfig {
 
     @Primary
     @Bean(name = "oracleDataSource")
-    @ConfigurationProperties(prefix = "spring.oracle.datasource.hikari")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.oracle")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
