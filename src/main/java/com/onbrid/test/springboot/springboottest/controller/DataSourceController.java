@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @Slf4j
 public class DataSourceController {
@@ -34,7 +37,6 @@ public class DataSourceController {
 
     @GetMapping("/douzone")
     public String oracleData() {
-
         osDao.queryForList("SELECT_COMM_TEST");
         osDao.customMethod();
 

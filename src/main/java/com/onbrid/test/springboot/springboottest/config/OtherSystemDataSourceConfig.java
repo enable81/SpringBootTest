@@ -34,27 +34,18 @@ public class OtherSystemDataSourceConfig {
     }
 
     @Bean(name = "othrsysSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactoryBean(@Autowired @Qualifier("othrsysDataSource") DataSource dataSource, ApplicationContext applicationContext) {
-        try {
-            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-            factoryBean.setDataSource(dataSource);
-            factoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
-            factoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/" + database + "/**/*.xml"));
-            return factoryBean.getObject();
-        } catch (Exception e) {
-            log.error("OtherSystemDataSourceConfig Error: {}", e);
-        }
-        return null;
+    public SqlSessionFactory sqlSessionFactoryBean(@Autowired @Qualifier("othrsysDataSource") DataSource dataSource, ApplicationContext applicationContext)
+            throws Exception {
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
+        factoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/" + database + "/**/*.xml"));
+        return factoryBean.getObject();
     }
 
     @Bean(name="othrsysSqlSession")
     public SqlSessionTemplate sqlSession(@Autowired @Qualifier("othrsysSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
-        if (sqlSessionFactory != null)
-            return new SqlSessionTemplate(sqlSessionFactory);
-        else {
-            log.debug("OtherSystemDataSourceConfig sqlSession: {}");
-            return null;
-        }
+        return new SqlSessionTemplate(sqlSessionFactory);
     }
 
     @Bean(name = "othrsysTransactionManager")
