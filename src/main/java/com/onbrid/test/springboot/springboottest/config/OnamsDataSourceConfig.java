@@ -21,12 +21,12 @@ import javax.sql.DataSource;
 @PropertySource("classpath:config/onams-${spring.profiles.active}.properties")
 public class OnamsDataSourceConfig {
 
-    @Value("${onams.database.active}")
+    @Value("${onams.database.mapper-dir}")
     String database;
 
     @Primary
     @Bean(name = "onamsDataSource")
-    @ConfigurationProperties(prefix = "sprin.datasource.hikari.onams")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari.onams")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
@@ -38,7 +38,7 @@ public class OnamsDataSourceConfig {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
-        factoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/" + database + "/**/*.xml"));
+        factoryBean.setMapperLocations(applicationContext.getResources("classpath:/sql/onams/" + database + "/**/*.xml"));
         return factoryBean.getObject();
     }
 

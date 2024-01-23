@@ -2,10 +2,12 @@ package com.onbrid.test.springboot.springboottest.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
+@Service
 @Primary
 public class TestServiceImpl implements TestService {
 
