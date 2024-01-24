@@ -27,12 +27,13 @@ public class DataSourceController {
 
 
     @GetMapping("/onams")
-    public String onamsData() {
+    public Object onamsData() {
 
         onamsDao.queryForList("SELECT_COMM_TEST");
         onamsDao.customMethod();
-
-        return "onams-datasource";
+        String str = "onams-datasource";
+        Object o = str;
+        return o;
     }
 
     @GetMapping("/douzone")
