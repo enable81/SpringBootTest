@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="sql-mapper">
+<mapper namespace="sql-mapper.os">
 
     <!-- 공통조회 테스트 -->
     <select id="SELECT_COMM_TEST" resultType="java.util.HashMap">

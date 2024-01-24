@@ -2,8 +2,6 @@ package com.onbrid.test.springboot.springboottest.dao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,11 +9,11 @@ import java.util.Map;
 @Slf4j
 public abstract class OnBridDao {
 
-    protected static String NAMESPACE = "sql-mapper.";
+    protected String NAMESPACE = "sql-mapper.";
 
     protected SqlSessionTemplate sqlSessionTemplate;
 
-
+    abstract void setNameSpace(String sub);
 
 
     public  int delete(String sqlId) {
@@ -75,7 +73,7 @@ public abstract class OnBridDao {
 
 
     public  String queryForStr(String sqlId, Map rowMap) {
-        return (String)sqlSessionTemplate.selectOne(NAMESPACE + sqlId, rowMap);
+        return (String) sqlSessionTemplate.selectOne(NAMESPACE + sqlId, rowMap);
     }
 
 

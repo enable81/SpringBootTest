@@ -16,14 +16,16 @@ import java.util.Map;
 @Slf4j
 public class OtherSystemDao extends OnBridDao {
 
-    // private String NAMESPACE = super.NAMESPACE + "os.";
-
     @Autowired
     public OtherSystemDao(@Qualifier("othrsysSqlSession") SqlSessionTemplate sqlSessionTemplate) {
         this.sqlSessionTemplate = sqlSessionTemplate;
-        log.debug("Other System Dao init...");
+        this.setNameSpace("os.");
     }
 
+    @Override
+    void setNameSpace(String sub) {
+        super.NAMESPACE += sub;
+    }
 
     public List customMethod() {
         // 어떤 작업...

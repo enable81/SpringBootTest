@@ -18,14 +18,13 @@ import java.util.Map;
 @Slf4j
 public class OnamsDao extends OnBridDao {
 
-    // private String NAMESPACE = super.NAMESPACE + "onams.";
-
     @Autowired
     public OnamsDao(@Qualifier("onamsSqlSession") SqlSessionTemplate sqlSessionTemplate) {
         this.sqlSessionTemplate = sqlSessionTemplate;
-        log.debug("OnAMS Dao init...");
     }
 
+    @Override
+    void setNameSpace(String sub) {}
 
     @Override
     public List queryForList(String sqlId) {

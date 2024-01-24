@@ -24,9 +24,6 @@ public class OnamsResponseHandler implements ResponseBodyAdvice<Object> {
 
     /**
      * https://velog.io/@kylekim2123/SpringBoot-ResponseBodyAdvice%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EA%B3%B5%ED%86%B5-%EC%9D%91%EB%8B%B5-%EC%B2%98%EB%A6%AC%EC%99%80-%EA%B4%80%EB%A0%A8-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85
-     * @param returnType
-     * @param converterType
-     * @return
      */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {

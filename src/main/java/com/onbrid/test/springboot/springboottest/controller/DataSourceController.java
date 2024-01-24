@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,28 +23,22 @@ public class DataSourceController {
     public DataSourceController(OnamsDao onamsDao, OtherSystemDao osDao) {
         this.onamsDao = onamsDao;
         this.osDao = osDao;
-
     }
 
-
     @GetMapping("/onams")
-    public Object onamsData() {
+    public List onamsData() {
 
         onamsDao.queryForList("SELECT_COMM_TEST");
         onamsDao.customMethod();
-        String str = "onams-datasource";
-        Object o = str;
-        return o;
+        return onamsDao.customMethod();
     }
 
     @GetMapping("/douzone")
-    public String oracleData() {
+    public Map oracleData() {
         osDao.queryForList("SELECT_COMM_TEST");
         osDao.customMethod();
 
-        return "oracle-datasource";
+        return (Map) osDao.customMethod().get(0);
     }
-
-
 
 }
