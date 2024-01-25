@@ -21,12 +21,12 @@ import javax.sql.DataSource;
 @PropertySource("classpath:config/onams-${spring.profiles.active}.properties")
 public class OnamsDataSourceConfig {
 
-    @Value("${onams.database.mapper-dir}")
+    @Value("${database.mapper-dir.onams}")
     String database;
 
     @Primary
     @Bean(name = "onamsDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.onams")
+    @ConfigurationProperties(prefix = "spring.onams.datasource.hikari")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }

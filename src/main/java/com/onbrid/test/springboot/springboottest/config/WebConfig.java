@@ -13,10 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final ObjectMapper objectMapper;
-
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(0, new OnamsHttpMessageConverter(objectMapper));
-    }
+//    private final ObjectMapper objectMapper;
+//
+//    @Override
+//    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        converters.add(0, new OnamsHttpMessageConverter(objectMapper));
+//    }
 }

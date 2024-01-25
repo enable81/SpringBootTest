@@ -24,11 +24,11 @@ import java.io.IOException;
 @Slf4j
 public class OtherSystemDataSourceConfig {
 
-    @Value("${other.database.mapper-dir}")
+    @Value("${database.mapper-dir.other}")
     String database;
 
     @Bean(name = "othrsysDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.otherdb")
+    @ConfigurationProperties(prefix = "spring.otherdb.datasource.hikari")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }

@@ -1,0 +1,18 @@
+
+
+
+spring:
+  # Docker local-db
+  # compose.yml 파일의 내용을 실행한다.
+  docker:
+    compose:
+      enabled: true
+  ### classpath 내에 있는 schema.sql(DLL), data.sql(초기데이터 insert) 을 실행하여 DB 셀팅을 한다.
+#  sql:
+#    init:
+#      mode: always
+#      platform: mariadb
+
+
+
+

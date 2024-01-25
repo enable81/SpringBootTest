@@ -21,14 +21,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  */
 public class OnamsHttpMessageConverter extends MappingJackson2HttpMessageConverter {
 
-    public OnamsHttpMessageConverter(ObjectMapper objectMapper) {
-        super(objectMapper);
-        objectMapper.registerModule(new JavaTimeModule());
-        setObjectMapper(objectMapper);
-    }
-
-    @Override
-    public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-        return canWrite(mediaType);
-    }
+//    public OnamsHttpMessageConverter(ObjectMapper objectMapper) {
+//        super(objectMapper);
+//        objectMapper.registerModule(new JavaTimeModule());
+//        setObjectMapper(objectMapper);
+//    }
+//
+//    @Override
+//    public boolean canWrite(Class<?> clazz, MediaType mediaType) {
+//        return canWrite(mediaType);
+//    }
 }

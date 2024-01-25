@@ -1,0 +1,34 @@
+spring:
+  profiles:
+    # local, dev, onbrid, kgu, dudc.. 등으로 설정.
+    # local,dev 이런식으로 중복 설정 가능.
+    active: dev
+  docker:
+    compose:
+      # local profile(application-local.yml) 에서만 동작하게 세팅.
+      enabled: false
+  file:
+    path:
+      window: c:\\onbrid\\onams\\data
+      mac: /Users/onbrid/onams/data
+      unix: /data/
+
+# oracle, maria
+database:
+  profile: local
+  mapper-dir:
+    onams: mariadb
+    other: douzone
+
+logging:
+  level:
+    root: info
+    com.onbrid.test: debug
+    sql-mapper: debug
+    org.springframework.web: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.type.BasicTypeRegistry: warn
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari.pool.HikariPool: DEBUG
+    com.zaxxer.hikari: TRACE
+
