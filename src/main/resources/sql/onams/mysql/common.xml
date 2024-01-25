@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="sql-mapper">
+
+    <!-- 공통조회 테스트 -->
+    <select id="SELECT_COMM_TEST" resultType="java.util.HashMap">
+        /*  SELECT_COMM_TEST_MYSQL  */
+
+        SELECT *
+        FROM   COMM
+        <where>
+            <if test="UNIVNO != null and UNIVNO != ''">
+                AND UNIVNO = #{UNIVNO}
+            </if>
+            <if test="COMMNO != null and COMMNO != ''">
+                AND COMMNO = #{COMMNO}
+            </if>
+            <if test="0 == 0">
+                AND COMMNO = '00001'
+            </if>
+        </where>
+    </select>
+
+</mapper>

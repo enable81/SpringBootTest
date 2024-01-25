@@ -13,6 +13,9 @@ spring:
 #      mode: always
 #      platform: mariadb
 
+database:
+  mapper-dir:
+    onams: mariadb
 
 
 
