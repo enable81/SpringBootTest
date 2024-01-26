@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="sql-mapper">
+
+    <!-- 공통조회 테스트 -->
+    <select id="SELECT_TEST" resultType="java.util.HashMap">
+        /*  SELECT_TEST_MARIA  */
+
+        SELECT id, name, email, regist_date
+        FROM   AA_TEST
+    </select>
+
+</mapper>

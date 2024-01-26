@@ -38,7 +38,7 @@ public class OnamsDao extends OnBridDao {
 
         Map param = new HashMap();
         param.put("COMMNO", "00001");
-        return sqlSessionTemplate.selectList(NAMESPACE + "SELECT_COMM_TEST", param);
+        return sqlSessionTemplate.selectList(NAMESPACE + "SELECT_TEST", param);
     }
 
 

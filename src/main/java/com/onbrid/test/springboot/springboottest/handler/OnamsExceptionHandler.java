@@ -18,9 +18,9 @@ public class OnamsExceptionHandler {
         e.printStackTrace();
         return OnamsResponseBody.builder()
                 .result("error")
-                .message(e.getMessage())
+                .message("시스템에러가 발생하였습니다. 관리자에게 문의해 주세요.")
                 .data(null)
-                .description(e.toString())
+                .description(e.getMessage())
                 .path(request.getRequestURI())
                 .httpStatus(-1)
                 .build();

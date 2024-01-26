@@ -19,6 +19,15 @@ database:
     onams: oracle
     other: douzone
 
+# Mybatis Setting
+mybatis:
+  type-aliases-package: com.onbrid.test.springboot.springboottest.model
+  configuration:
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 30
+    #default-fetch-size: 500
+
+# Logback 설정
 logging:
   level:
     root: info

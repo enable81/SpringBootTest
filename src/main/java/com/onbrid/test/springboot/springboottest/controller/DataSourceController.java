@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
+//@RequestMapping("/api/v1")
 public class DataSourceController {
 
     OnamsDao onamsDao;
@@ -30,14 +30,14 @@ public class DataSourceController {
     @GetMapping("/onams")
     public List onamsData() {
 
-        onamsDao.queryForList("SELECT_COMM_TEST");
+        onamsDao.queryForList("SELECT_TEST");
         onamsDao.customMethod();
         return onamsDao.customMethod();
     }
 
     @GetMapping("/douzone")
     public Map oracleData() {
-        osDao.queryForList("SELECT_COMM_TEST");
+        osDao.queryForList("SELECT_TEST");
         osDao.customMethod();
 
         return (Map) osDao.customMethod().get(0);

@@ -5,22 +5,11 @@
 <mapper namespace="sql-mapper">
 
     <!-- 공통조회 테스트 -->
-    <select id="SELECT_COMM_TEST" resultType="java.util.HashMap">
-        /*  SELECT_COMM_TEST_MYSQL  */
+    <select id="SELECT_TEST" resultType="java.util.HashMap">
+        /*  SELECT_TEST_MYSQL  */
 
-        SELECT *
-        FROM   COMM
-        <where>
-            <if test="UNIVNO != null and UNIVNO != ''">
-                AND UNIVNO = #{UNIVNO}
-            </if>
-            <if test="COMMNO != null and COMMNO != ''">
-                AND COMMNO = #{COMMNO}
-            </if>
-            <if test="0 == 0">
-                AND COMMNO = '00001'
-            </if>
-        </where>
+        SELECT id, name, email, regist_date
+        FROM   AA_TEST
     </select>
 
 </mapper>
