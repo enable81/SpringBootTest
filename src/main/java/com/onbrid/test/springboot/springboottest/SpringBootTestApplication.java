@@ -7,7 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootTestApplication {
 
     // TODO: Exception ㅊㅓ리
+    // TODO: Message param 처리..
     // TODO: JWT
+    // TODO: file upload/download
+    // TODO: excel
+    // TODO: report
+
+    // TODO: log..
 
     // TODO: Project 모듈화 구성.
     // TODO: gradle 빌드.

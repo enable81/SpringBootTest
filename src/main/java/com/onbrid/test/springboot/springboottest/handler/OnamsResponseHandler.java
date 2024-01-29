@@ -39,9 +39,7 @@ public class OnamsResponseHandler implements ResponseBodyAdvice<Object> {
         return OnamsResponseBody.builder()
                 .result("success")
                 .code(((ServletServerHttpResponse) response).getServletResponse().getStatus())
-                .message("")
                 .data(body)
-                .description("")
                 .path(request.getURI().getPath())
                 .build();
     }
