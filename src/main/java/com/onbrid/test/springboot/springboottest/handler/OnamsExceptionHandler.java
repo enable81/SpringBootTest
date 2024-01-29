@@ -1,5 +1,6 @@
 package com.onbrid.test.springboot.springboottest.handler;
 
+import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.model.OnamsResponseBody;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,21 @@ public class OnamsExceptionHandler {
                 .data(null)
                 .description(e.getMessage())
                 .path(request.getRequestURI())
-                .httpStatus(-1)
                 .build();
     }
 
+    @ExceptionHandler(OnBridException.class)
+    OnamsResponseBody onbridErrorHandler(HttpServletRequest request, OnBridException e) {
+        e.printStackTrace();
+        return OnamsResponseBody.builder()
+                .code(e.getCode())
+                .result("error")
+                .message(e.getMessage())
+                .data(e.getArgs())
+                .description(e.getDetailMessage())
+                .path(request.getRequestURI())
+                .build();
+
+    }
 
 }

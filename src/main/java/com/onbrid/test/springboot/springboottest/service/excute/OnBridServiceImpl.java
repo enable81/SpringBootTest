@@ -1,12 +1,15 @@
 package com.onbrid.test.springboot.springboottest.service.excute;
 
+import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.exception.OnBridExceptionWithCommit;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class OnBridServiceImpl implements OnBridService {
     @Override
     @Transactional(rollbackFor={Exception.class}, noRollbackFor={OnBridExceptionWithCommit.class})
@@ -32,7 +35,7 @@ public class OnBridServiceImpl implements OnBridService {
                     method = this.getClass().getMethod(methodName, param.getClass());
                     return method.invoke(this, param);
                 } catch (NoSuchMethodException e) {
-                    exception = e;
+                    exception = new OnBridException(-99999, "서비스가 없습니다.", e.toString());
                 } catch (Exception e) {
                     throw e;
                 }
@@ -60,30 +63,30 @@ public class OnBridServiceImpl implements OnBridService {
                     }
                 }
 
-                throw new RuntimeException(exception);
+                throw exception;
             }
             else {
-                throw new RuntimeException("It's forbidden to invoke method : " + methodName);
+                throw new OnBridException(-99999, "It's forbidden to invoke method : " + methodName);
             }
 
         }
         // java reflection 으로 메서드 invoke 하기 때문에 예외는 InvocationTargetException 이다. root cause 를 찾아서 던진다.
         catch (Throwable ex) {
             Throwable cause = ex.getCause();
-            Throwable rootCause = cause==null?ex:null;
+            Throwable rootCause = cause == null ? ex : null;
             while(cause != null)
             {
                 rootCause = cause;
                 cause = cause.getCause();
             }
 
-            if(rootCause != null && rootCause.toString().contains("ValueChainExceptionWithCommit"))
+            if(rootCause != null && rootCause.toString().contains("OnBridExceptionWithCommit"))
             {
                 throw new OnBridExceptionWithCommit(rootCause);
             }
             else
             {
-                throw new RuntimeException(rootCause);
+                throw new OnBridException(rootCause);
             }
         }
 

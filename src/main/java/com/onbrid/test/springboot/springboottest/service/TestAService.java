@@ -4,20 +4,23 @@ import com.onbrid.test.springboot.springboottest.dao.OnamsDao;
 import com.onbrid.test.springboot.springboottest.model.ReqData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
+@Profile("dev")
 @Service
-public class TestService extends OnamsService {
+public class TestAService extends TestService {
 
-    final OnamsDao onamsDao;
 
-    public List selectCommList(ReqData reqData) {
-        return onamsDao.customMethod();
+    public TestAService(OnamsDao onamsDao) {
+        super(onamsDao);
+    }
+
+    public List testA(ReqData reqData) {
+        log.debug("TestA testA");
+        return null;
     }
 }

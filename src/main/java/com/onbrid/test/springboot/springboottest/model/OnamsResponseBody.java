@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OnamsResponseBody<T> {
 
+    private int code;
+
     private String result;
 
     private String message;
@@ -26,15 +28,14 @@ public class OnamsResponseBody<T> {
 
     private final LocalDateTime timeStamp = LocalDateTime.now();
 
-    private int httpStatus;
 
     @Builder
-    public OnamsResponseBody(String result, String message, T data, String description, String path, int httpStatus) {
+    public OnamsResponseBody(String result, String message, T data, String description, String path, int code) {
+        this.code = code;
         this.result = result;
         this.message = message;
         this.data = data;
         this.description = description;
         this.path = path;
-        this.httpStatus = httpStatus;
     }
 }

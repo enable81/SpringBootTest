@@ -1,14 +1,12 @@
 package com.onbrid.test.springboot.springboottest.controller;
 
 
+import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.model.ReqData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -22,7 +20,7 @@ import java.util.Set;
 public class ReflectionController {
 
 
-    @RequestMapping(path = "/{serviceBeanName}/{methodName}")
+    @RequestMapping(path = "/{serviceBeanName}/{methodName}", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public Object doAction(HttpServletRequest request, HttpServletResponse response,
                            ReqData reqData,
@@ -43,11 +41,33 @@ public class ReflectionController {
 
         }
         catch (Throwable ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            Throwable cause = ex.getCause();
+            Throwable mainCause = cause == null ? ex : null;
+            while (cause != null) {
+                log.debug("while (cause != null)");
+                mainCause = cause;
+                cause = cause.getCause();
+                //mainCause.printStackTrace();
+                //cause.printStackTrace();
+            }
+
+            // TODO: root cause stack 을 DB에 저장.
+
+
+            Exception throwEx = null;
+            if (mainCause instanceof OnBridException) {
+                throwEx = (OnBridException) mainCause;
+            }
+            else {
+                throwEx = new OnBridException(mainCause);
+            }
+
+            throw throwEx;
         }
 
 
-        return getResultMap((ReqData) result);
+        return result;
     }
 
 

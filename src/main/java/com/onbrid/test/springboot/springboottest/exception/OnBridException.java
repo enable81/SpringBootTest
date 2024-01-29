@@ -32,6 +32,17 @@ public class OnBridException extends RuntimeException {
 		this.code = code;
 	}
 
+	public OnBridException(int code, String message) {
+		this.code = code;
+		this.message = message;
+	}
+
+	public OnBridException(int code, String message, String detailMessage) {
+		this.code = code;
+		this.message = message;
+		this.detailMessage = detailMessage;
+	}
+
 	public OnBridException(int code, String[] args) {
 		this.code = code;
 		this.args = args;
@@ -81,6 +92,6 @@ public class OnBridException extends RuntimeException {
 	
 	public String toString()
 	{
-		return this.getClass().getName() + " [Code = " + this.code + "] [Arguments = " + Arrays.toString(this.args) + "] [Message = " + this.message + "] [Detail Message = " + this.detailMessage + "] ";
+		return this.getClass().getName() + " [Code: " + this.code + "] [Arguments = " + Arrays.toString(this.args) + "] [Message = " + this.message + "] [Detail Message = " + this.detailMessage + "] ";
 	}
 }
