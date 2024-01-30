@@ -27,6 +27,11 @@ mybatis:
     default-statement-timeout: 30
     #default-fetch-size: 500
 
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
 # Logback 설정
 logging:
   level:
