@@ -7,6 +7,10 @@ import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * https://goddaehee.tistory.com/321
+ * ENC(암호화된 문자열)
+ */
 @Configuration
 public class JasyptConfig {
 
