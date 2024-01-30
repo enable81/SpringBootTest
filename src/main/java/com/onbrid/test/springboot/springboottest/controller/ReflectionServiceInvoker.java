@@ -1,7 +1,7 @@
 package com.onbrid.test.springboot.springboottest.controller;
 
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
-import com.onbrid.test.springboot.springboottest.model.ReqData;
+import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
@@ -10,14 +10,14 @@ import java.lang.reflect.Method;
 public class ReflectionServiceInvoker {
 
 
-    public static Object invoke(Object bean, String methodName, ReqData vcData) {
+    public static Object invoke(Object bean, String methodName, OnBridOnamsData onamsData) {
 
         Method method = null;
 
         try {
 
             method = bean.getClass().getMethod("execute", String.class, Object.class);
-            return method.invoke(bean, methodName, vcData);
+            return method.invoke(bean, methodName, onamsData);
 
         }
         catch (Exception e) {

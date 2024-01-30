@@ -5,8 +5,8 @@
 <mapper namespace="sql-mapper">
 
     <!-- 공통조회 테스트 -->
-    <select id="SELECT_COMM_TEST" resultType="java.util.HashMap">
-        /*  SELECT_COMM_TEST_MARIA  */
+    <select id="SELECT_TEST" resultType="java.util.HashMap">
+        /*  SELECT_TEST_MARIA  */
 
         SELECT *
         FROM   COMM
