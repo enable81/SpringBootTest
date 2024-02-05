@@ -41,6 +41,8 @@ dependencies {
     // Log4jdbc는 스프링에서 SQL문을 실행한 로그를 효과적이고 직관적으로 볼 수 있도록 해주는 라이브러리 https://kimvampa.tistory.com/63
     implementation'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
+    // Swagger
+    // https://wonsjung.tistory.com/584
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
     // https://github.com/ulisesbocchio/jasypt-spring-boot

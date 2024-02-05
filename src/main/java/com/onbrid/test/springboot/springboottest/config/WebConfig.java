@@ -1,27 +1,23 @@
 package com.onbrid.test.springboot.springboottest.config;
 
-import com.onbrid.test.springboot.springboottest.interceptor.OnamsHandlerInterceptor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.onbrid.test.springboot.springboottest.handler.OnamsHttpMessageConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-public class WebConfig extends WebMvcConfigurationSupport {
+public class WebConfig implements WebMvcConfigurer {
 
-    final OnamsHandlerInterceptor onamsHandlerInterceptor;
-
-//    private final ObjectMapper objectMapper;
-//
-//    @Override
-//    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(0, new OnamsHttpMessageConverter(objectMapper));
-//    }
+    final ObjectMapper objectMapper;
 
 
     @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        // registry.addInterceptor(onamsHandlerInterceptor).excludePathPatterns("/");
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(0, new OnamsHttpMessageConverter(objectMapper));
     }
 }
