@@ -40,8 +40,8 @@ public class JasyptConfig {
         pbeEnc.setAlgorithm("PBEWITHMD5ANDDES");
         pbeEnc.setPassword(key);
 
-        String id = "onams";
-        String password = "onbrid8845";
+        String id = "ONAMS";
+        String password = "onbrid!8845";
 
         System.out.println(pbeEnc.encrypt(id));
         System.out.println(pbeEnc.encrypt(password));

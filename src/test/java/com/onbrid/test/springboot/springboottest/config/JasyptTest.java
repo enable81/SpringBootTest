@@ -10,9 +10,11 @@ public class JasyptTest {
     void encryptTest(){
         String id = "onams";
         String password = "onbrid8845";
+        String url = "jdbc:log4jdbc:mariadb://localhost:43306/ONAMS?allowMultiQueries=true&autocommit=false";
 
         System.out.println(jasyptEncoding(id));
         System.out.println(jasyptEncoding(password));
+        System.out.println(jasyptEncoding(url));
     }
 
     public String jasyptEncoding(String value) {

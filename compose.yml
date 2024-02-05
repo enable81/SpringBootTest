@@ -19,6 +19,7 @@ services:
       MARIADB_USER: onams
       MARIADB_PASSWORD: onbrid8845
       MARIADB_ROOT_PASSWORD: onbrid8845
+      TZ: Asia/Seoul
   # mysql db setting
   mysql:
     image: mysql:8.0.33
@@ -35,3 +36,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: onbrid8845
       MYSQL_DATABASE: onams
+      MYSQL_USER: onams
+      MYSQL_PASSWORD: onbrid8845
+      TZ: Asia/Seoul
