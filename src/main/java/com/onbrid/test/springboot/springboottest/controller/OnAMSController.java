@@ -4,6 +4,7 @@ package com.onbrid.test.springboot.springboottest.controller;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
+import com.onbrid.test.springboot.springboottest.service.excute.OnAMSServiceInvoker;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 @RestController
 @Slf4j
 @RequestMapping("/api/v1")
-public class ReflectionController {
-
+public class OnAMSController {
 
     @RequestMapping(path = "/{serviceBeanName}/{methodName}", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -34,7 +34,7 @@ public class ReflectionController {
             Object bean = wac.getBean(serviceBeanName);
 
             //서비스 호출
-            result = ReflectionServiceInvoker.invoke(bean, methodName, onBridOnamsData);
+            result = OnAMSServiceInvoker.invoke(bean, methodName, onBridOnamsData);
         }
         catch (Throwable ex) {
             Throwable cause = ex.getCause();

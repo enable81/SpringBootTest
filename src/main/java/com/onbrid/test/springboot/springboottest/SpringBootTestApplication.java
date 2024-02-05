@@ -14,6 +14,7 @@ public class SpringBootTestApplication {
     // TODO: report
 
     // TODO: log..
+    // TODO: root cause stack 을 DB에 저장.
 
     // TODO: Project 모듈화 구성.
     // TODO: gradle 빌드.
