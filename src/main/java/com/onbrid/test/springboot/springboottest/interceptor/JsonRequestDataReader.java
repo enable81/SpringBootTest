@@ -56,14 +56,13 @@ public class JsonRequestDataReader {
         if (dataSetMap.size() > 0){
             while (iterator.hasNext()) {
                 String id = (String)iterator.next();
-                // onBridOnamsData.setDataList(id, getDataSetRows(id));
                 List<Map> rows = getDataSetRows(id);
                 if (rows.size() > 0)
-                    onBridOnamsData.setDataList(id, rows);
+                    onBridOnamsData.setList(rows);
             }
         }
 
-        onBridOnamsData.setParameterMap(map2DataSetRow(paramMap));
+        onBridOnamsData.setParamMap(map2DataSetRow(paramMap));
 
         return onBridOnamsData;
     }

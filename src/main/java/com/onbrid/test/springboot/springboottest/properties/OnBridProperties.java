@@ -7,4 +7,5 @@ public class OnBridProperties {
 
 
     public static final String REQUEST_READER = "REQUEST_READER";
+    public static final String EXCEL_MODEL_MAP_PARAM = "EXCEL_MODEL_MAP_PARAM";
 }

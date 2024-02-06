@@ -19,23 +19,11 @@ public class OnBridOnamsData implements Serializable {
     @Serial
     private static final long serialVersionUID = -7604534086257395588L;
 
-    public static final String PARAM_KEY = "PARAM_MAP";
-
     /**
      * {"UNIVNO": "0001", "ASSETNO": "1234", "LIST": [{}, {},,,{}]}
      */
-    private HashMap map;
+    private Map paramMap;
 
-    public OnBridOnamsData() {
-        this.map = new HashMap();
-    }
-
-    public void setParameterMap(Map paramMap) {
-        this.map.put(PARAM_KEY, paramMap);
-    }
-
-    public void setDataList(String id, List list) {
-        this.map.put(id, list);
-    }
+    private List<Map> list;
 
 }

@@ -8,7 +8,7 @@ public class SpringBootTestApplication {
 
     // TODO: Exception ㅊㅓ리
     // TODO: Message param 처리..
-    // TODO: JWT
+    // TODO: JWT / security
     // TODO: file upload/download
     // TODO: excel
     // TODO: report
