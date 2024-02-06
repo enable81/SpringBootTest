@@ -2,8 +2,7 @@ package com.onbrid.test.springboot.springboottest.controller;
 
 
 import com.onbrid.test.springboot.springboottest.excel.ExcelService;
-import com.onbrid.test.springboot.springboottest.excel.OnamsExcelController;
-import com.onbrid.test.springboot.springboottest.excel.OnamsFileDownView;
+import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
@@ -79,11 +78,10 @@ public class OnamsController {
     public Object excelDownload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
         JsonRequestDataReader requestDataReader = new JsonRequestDataReader(request);
         OnBridOnamsData excelParamData = requestDataReader.getOnBridOnamsData();
-        log.debug("excelDownload: {}", excelParamData);
-        modelMap.put(OnBridProperties.EXCEL_MODEL_MAP_PARAM, excelParamData);
 
+        modelMap.put(OnBridProperties.PARAM.EXCEL_MODEL_MAP, excelParamData);
 
-        return new OnamsFileDownView(excelService);
+        return new OnamsExcelDownView(excelService);
     }
 
 }

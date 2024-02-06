@@ -16,7 +16,7 @@ public class OnamsHandlerInterceptor implements HandlerInterceptor {
 
         JsonRequestDataReader requestDataReader = new JsonRequestDataReader();
         requestDataReader.init(request);
-        request.setAttribute(OnBridProperties.REQUEST_READER, requestDataReader);
+        request.setAttribute(OnBridProperties.PARAM.REQUEST_READER, requestDataReader);
 
         return true;
     }
