@@ -26,4 +26,6 @@ public class OnBridOnamsData implements Serializable {
 
     private List<Map> list;
 
+    private List<Map> excelColumns;
+
 }

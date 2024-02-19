@@ -37,6 +37,7 @@ public class OnamsController {
         try {
             JsonRequestDataReader requestDataReader = new JsonRequestDataReader(request);
             OnBridOnamsData onBridOnamsData = requestDataReader.getOnBridOnamsData();
+            log.debug(onBridOnamsData.toString());
 
             //DispatcherServlet 이 만든 context 이외에 application root context 도 있을 경우엔 root context 를 가져온다.
             WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
@@ -45,7 +46,6 @@ public class OnamsController {
 
             //서비스 호출
             result = OnAMSServiceInvoker.invoke(bean, methodName, onBridOnamsData);
-            result = onBridOnamsData;
         }
         catch (Throwable ex) {
             Throwable cause = ex.getCause();

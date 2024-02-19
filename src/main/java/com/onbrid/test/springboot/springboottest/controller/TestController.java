@@ -1,5 +1,6 @@
 package com.onbrid.test.springboot.springboottest.controller;
 
+import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.service.TestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,13 @@ public class TestController {
         log.error("ERROR");
 
         return "log test";
+    }
+    @GetMapping("/testExcel")
+    public String testExcel() {
+
+
+
+        return "testExcel";
     }
 
 }

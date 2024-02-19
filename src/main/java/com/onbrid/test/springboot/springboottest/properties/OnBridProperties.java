@@ -14,6 +14,7 @@ public class OnBridProperties {
          * Excel File Name 은 확장자 뺀 파일이름만<br>
          * 예: 재물목록
          */
+        public static final String EXCEL_COLS = "EXCELCOLUMNS";
         public static final String EXCEL_FILE_NAME = "excelFileName";
     }
 

@@ -3,6 +3,7 @@ package com.onbrid.test.springboot.springboottest.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
+import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,8 @@ public class JsonRequestDataReader {
         } catch (Exception e) {
             throw new JsonParsingException("[RequestBodyDataReader] - " + e.getMessage(), e);
         }
+
+        log.debug("JsonRequestDataReader.dataSetMap: {}", dataSetMap.toString());
     }
 
 
@@ -57,8 +60,10 @@ public class JsonRequestDataReader {
             while (iterator.hasNext()) {
                 String id = (String)iterator.next();
                 List<Map> rows = getDataSetRows(id);
-                if (rows.size() > 0)
+                if (id.equals("list") && rows.size() > 0)
                     onBridOnamsData.setList(rows);
+                if (id.equals(OnBridProperties.EXCEL.EXCEL_COLS) && rows.size() > 0)
+                    onBridOnamsData.setExcelColumns(rows);
             }
         }
 
