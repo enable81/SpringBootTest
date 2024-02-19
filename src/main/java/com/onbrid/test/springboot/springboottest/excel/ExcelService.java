@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @Service
 public class ExcelService {
     private final static String COLUMN_KEY      = "KEY";
@@ -25,15 +27,24 @@ public class ExcelService {
     /**
      * [구버전]   EXCELCOLUMNS = [{ASSETNO: 재물번호}, {ASSETNAME: 재물명}]<br/>
      * [api/v1] EXCELCOLUMNS = [{KEY: ASSETNO, HEADER: 재물번호, TYPE: NUM(INT)|FLT(FLOAT,DOUBLE, DBL)|STRING(STR)|DATE(DT)}, {KEY: ASSETNAME, HEADER: 재물명, TYPE:STRING}]<br/>
-     * @param paramMap {EXCELCOLUMNS:[], 조회 조건1: "", 조회 조건2: ""  }
+     * @param onBridOnamsData {EXCELCOLUMNS:[], 조회 조건1: "", 조회 조건2: ""  }
      * @return
      * @throws JsonProcessingException
      */
     public SXSSFWorkbook commonExcelFile(OnBridOnamsData onBridOnamsData) {
-
+        log.debug("ExcelService.onBridOnamsData: {}", onBridOnamsData.toString());
+        log.debug("ExcelService.onBridOnamsData.ExcelColumns: {}", onBridOnamsData.getExcelColumns());
         // 데이터 조회
         // 데이터가 있을 때만 만든다.??
         List<Map> datas = new ArrayList<>();
+        Map item;
+        for (int k=0; k<100000; k++) {
+            item = new HashMap();
+            item.put("ASSETNO", "A-" + k);
+            item.put("ASSETNAME", "AN-" + k);
+            datas.add(item);
+        }
+
 
         workbook = new SXSSFWorkbook();
         workbook.setCompressTempFiles(true);
@@ -102,22 +113,17 @@ public class ExcelService {
 
                     if (rowData.containsKey(columns.get(i).get(COLUMN_KEY))) {
                         type = String.valueOf(columns.get(i).get(COLUMN_TYPE)).toUpperCase();
-                        if (type.equals("NUM")) {
+                        if (type.equals("NUM") || type.equals("INT")) {
                             cell = row.createCell(i);
                             cell.setCellStyle(intStyle);
                             cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
                         }
-                        else if (type.equals("STR")) {
-                            cell = row.createCell(i);
-                            cell.setCellStyle(stringStyle);
-                            cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
-                        }
-                        else if (type.equals("DT")) {
+                        else if (type.equals("DT") || type.equals("DATE")) {
                             cell = row.createCell(i);
                             cell.setCellStyle(dateStyle);
                             cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
                         }
-                        else if (type.equals("FLT")) {
+                        else if (type.equals("FLT") || type.equals("FLOAT") || type.equals("DOUBLE") || type.equals("DBL")) {
                             cell = row.createCell(i);
                             cell.setCellStyle(numberStyle);
                             cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
@@ -126,6 +132,12 @@ public class ExcelService {
                             cell = row.createCell(i);
                             cell.setCellStyle(cellStyle);
                             cell.setCellValue(new XSSFRichTextString(""));
+                        }
+                        else {
+                            // STR, String, Etc
+                            cell = row.createCell(i);
+                            cell.setCellStyle(stringStyle);
+                            cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
                         }
                     }
                 }

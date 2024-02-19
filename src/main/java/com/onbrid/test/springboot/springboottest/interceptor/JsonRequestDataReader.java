@@ -1,5 +1,6 @@
 package com.onbrid.test.springboot.springboottest.interceptor;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
@@ -60,7 +61,7 @@ public class JsonRequestDataReader {
             while (iterator.hasNext()) {
                 String id = (String)iterator.next();
                 List<Map> rows = getDataSetRows(id);
-                if (id.equals("list") && rows.size() > 0)
+                if (id.equals(OnBridProperties.PARAM.LIST) && rows.size() > 0)
                     onBridOnamsData.setList(rows);
                 if (id.equals(OnBridProperties.EXCEL.EXCEL_COLS) && rows.size() > 0)
                     onBridOnamsData.setExcelColumns(rows);
@@ -68,6 +69,15 @@ public class JsonRequestDataReader {
         }
 
         onBridOnamsData.setParamMap(map2DataSetRow(paramMap));
+
+        // Excel Col Data Setting
+        if (paramMap.containsKey(OnBridProperties.EXCEL.EXCEL_COLS)) {
+            try {
+                onBridOnamsData.setExcelColumns(Arrays.asList(mapper.readValue(String.valueOf(paramMap.get(OnBridProperties.EXCEL.EXCEL_COLS)), HashMap[].class)));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
 
         return onBridOnamsData;
     }
@@ -107,7 +117,6 @@ public class JsonRequestDataReader {
 
         String requestURI = request.getRequestURI();
         paramMap.put("REQUEST_URI", requestURI);
-
 
     }
 
@@ -171,11 +180,11 @@ public class JsonRequestDataReader {
                 row.put(columnName, columnValue);
             }
 
-            row.put("SES_USERID", paramMap.get("SES_USERID"));
-            row.put("SES_LANG", paramMap.get("SES_LANG"));
-            row.put("SES_WHSE", paramMap.get("SES_WHSE"));
-            row.put("SES_DEVISION", paramMap.get("SES_DEVISION"));
-            row.put("SES_MANAGE_LVL", paramMap.get("SES_MANAGE_LVL"));
+            //row.put("SES_USERID", paramMap.get("SES_USERID"));
+            //row.put("SES_LANG", paramMap.get("SES_LANG"));
+            //row.put("SES_WHSE", paramMap.get("SES_WHSE"));
+            //row.put("SES_DEVISION", paramMap.get("SES_DEVISION"));
+            //row.put("SES_MANAGE_LVL", paramMap.get("SES_MANAGE_LVL"));
             //row.put("SES_COMPANY", paramMap.get("SES_COMPANY"));
             //row.put("SES_OWNERROLE", paramMap.get("SES_OWNERROLE"));
             //row.put("SES_WCODEROLE", paramMap.get("SES_WCODEROLE"));

@@ -35,7 +35,7 @@ public class OnamsExcelDownView extends AbstractView {
     protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         OnBridOnamsData onBridOnamsData = (OnBridOnamsData) model.get(OnBridProperties.PARAM.EXCEL_MODEL_MAP);
-        log.debug("OnBridProperties.PARAM.EXCEL_MODEL_MAP: {}", onBridOnamsData.getParamMap());
+
         // ExcelFileName
         String FILE_NM = String.valueOf(onBridOnamsData.getParamMap().get(OnBridProperties.EXCEL.EXCEL_FILE_NAME));
         if (FILE_NM.trim().isEmpty()) {
@@ -64,7 +64,7 @@ public class OnamsExcelDownView extends AbstractView {
 
         response.setContentType("application/msexcel;charset=UTF-8");
         response.setHeader("Content-Disposition",
-                "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", " ") + ";");
+                "attachment; filename=" + fileName + ";");
 
         OutputStream out = response.getOutputStream();
         try {

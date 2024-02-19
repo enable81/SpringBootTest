@@ -74,6 +74,7 @@ public class OnamsController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(path = "/fileService/excelDownload")
     public Object excelDownload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
         JsonRequestDataReader requestDataReader = new JsonRequestDataReader(request);
