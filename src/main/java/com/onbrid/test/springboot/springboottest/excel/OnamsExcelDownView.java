@@ -4,9 +4,11 @@ import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
@@ -21,15 +23,17 @@ import java.util.Map;
 /**
  * <a href="https://hermeslog.tistory.com/655">[Spring] 개발환경 구축 - 대용량 Excel 다운로드</a>
  */
+@RequiredArgsConstructor
 @Slf4j
 @Component
 public class OnamsExcelDownView extends AbstractView {
 
-    private final ExcelService excelService;
+    final ExcelService excelService;
 
-    public OnamsExcelDownView(ExcelService excelService) {
-        this.excelService = excelService;
-    }
+//    @Autowired
+//    public OnamsExcelDownView(ExcelService excelService) {
+//        this.excelService = excelService;
+//    }
 
     @Override
     protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -58,6 +62,8 @@ public class OnamsExcelDownView extends AbstractView {
         // .xlsx 파일은 XML 파일이 포함된 압축 파일이기 때문에 POI에서 "Zip Bomb" 관련한 취약점이 발생할 가능성이 있다고 한다.
         // 최소 압축비율을 지정한다.
         ZipSecureFile.setMinInflateRatio(0);
+
+        onBridOnamsData.setRequest(request);
 
         // Excel File Make
         SXSSFWorkbook workbook = excelService.commonExcelFile(onBridOnamsData);

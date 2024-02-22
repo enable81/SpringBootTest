@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
+import com.onbrid.test.springboot.springboottest.service.TestAService;
+import com.onbrid.test.springboot.springboottest.service.TestService;
+import com.onbrid.test.springboot.springboottest.service.excute.OnAMSServiceInvoker;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFCell;
@@ -12,10 +16,13 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.*;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ExcelService {
     private final static String COLUMN_KEY      = "KEY";
@@ -36,14 +43,23 @@ public class ExcelService {
         log.debug("ExcelService.onBridOnamsData.ExcelColumns: {}", onBridOnamsData.getExcelColumns());
         // 데이터 조회
         // 데이터가 있을 때만 만든다.??
-        List<Map> datas = new ArrayList<>();
-        Map item;
-        for (int k=0; k<100000; k++) {
-            item = new HashMap();
-            item.put("ASSETNO", "A-" + k);
-            item.put("ASSETNAME", "AN-" + k);
-            datas.add(item);
-        }
+        List<Map> datas;
+//        Map item;
+//        for (int k=0; k<100000; k++) {
+//            item = new HashMap();
+//            item.put("ASSETNO", "A-" + k);
+//            item.put("ASSETNAME", "AN-" + k);
+//            datas.add(item);
+//        }
+        // TEST
+        // 이건 서비스를 계속 주입해줘야함...
+        //datas = testService.selectTestBigData(onBridOnamsData);
+
+        //DispatcherServlet 이 만든 context 이외에 application root context 도 있을 경우엔 root context 를 가져온다.
+        WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(onBridOnamsData.getRequest().getSession().getServletContext());
+        //service bean 가져오기.
+        Object bean = wac.getBean(String.valueOf("testService"));
+        datas = (List<Map>) OnAMSServiceInvoker.invoke(bean, "selectTestBigData", onBridOnamsData);
 
 
         workbook = new SXSSFWorkbook();
@@ -116,17 +132,17 @@ public class ExcelService {
                         if (type.equals("NUM") || type.equals("INT")) {
                             cell = row.createCell(i);
                             cell.setCellStyle(intStyle);
-                            cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
+                            cell.setCellValue(new XSSFRichTextString(String.valueOf(rowData.get(columns.get(i).get(COLUMN_KEY)))));
                         }
                         else if (type.equals("DT") || type.equals("DATE")) {
                             cell = row.createCell(i);
                             cell.setCellStyle(dateStyle);
-                            cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
+                            cell.setCellValue(new XSSFRichTextString(String.valueOf(rowData.get(columns.get(i).get(COLUMN_KEY)))));
                         }
                         else if (type.equals("FLT") || type.equals("FLOAT") || type.equals("DOUBLE") || type.equals("DBL")) {
                             cell = row.createCell(i);
                             cell.setCellStyle(numberStyle);
-                            cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
+                            cell.setCellValue(new XSSFRichTextString(String.valueOf(rowData.get(columns.get(i).get(COLUMN_KEY)))));
                         }
                         else if (type.equals("NUL")) {
                             cell = row.createCell(i);
@@ -137,7 +153,7 @@ public class ExcelService {
                             // STR, String, Etc
                             cell = row.createCell(i);
                             cell.setCellStyle(stringStyle);
-                            cell.setCellValue(new XSSFRichTextString((String) rowData.get(columns.get(i).get(COLUMN_KEY))));
+                            cell.setCellValue(new XSSFRichTextString(String.valueOf(rowData.get(columns.get(i).get(COLUMN_KEY)))));
                         }
                     }
                 }

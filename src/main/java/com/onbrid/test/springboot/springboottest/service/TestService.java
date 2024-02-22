@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,5 +19,10 @@ public class TestService extends OnamsService {
     public List selectCommList(OnBridOnamsData onamsData) {
         log.debug(onamsData.toString());
         return onamsDao.customMethod();
+    }
+
+    public List<Map> selectTestBigData(OnBridOnamsData onamsData) {
+        return onamsDao.queryForList("SELECT_TEST_BIG_DATA");
+
     }
 }

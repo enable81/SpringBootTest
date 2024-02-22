@@ -39,6 +39,8 @@ public class OnamsController {
             OnBridOnamsData onBridOnamsData = requestDataReader.getOnBridOnamsData();
             log.debug(onBridOnamsData.toString());
 
+            onBridOnamsData.setRequest(request);
+
             //DispatcherServlet 이 만든 context 이외에 application root context 도 있을 경우엔 root context 를 가져온다.
             WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
             //service bean 가져오기.

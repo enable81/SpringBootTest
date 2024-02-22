@@ -1,5 +1,6 @@
 package com.onbrid.test.springboot.springboottest.model;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,4 +29,5 @@ public class OnBridOnamsData implements Serializable {
 
     private List<Map> excelColumns;
 
+    public HttpServletRequest request = null;
 }

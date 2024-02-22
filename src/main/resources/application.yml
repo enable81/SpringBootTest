@@ -1,8 +1,11 @@
+server:
+  port: 8081
+
 spring:
   profiles:
     # local, dev, onbrid, kgu, dudc.. 등으로 설정.
     # local,dev 이런식으로 중복 설정 가능.
-    active: local
+    active: dev
   docker:
     compose:
       # local profile(application-local.yml) 에서만 동작하게 세팅.
@@ -44,4 +47,3 @@ logging:
     com.zaxxer.hikari.HikariConfig: DEBUG
     com.zaxxer.hikari.pool.HikariPool: DEBUG
     com.zaxxer.hikari: TRACE
-
