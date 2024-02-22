@@ -6,6 +6,8 @@ import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataRead
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import com.onbrid.test.springboot.springboottest.service.TestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "Test-Controller", description = "API 테스트 컨트롤러 입니다.")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -50,6 +53,7 @@ public class TestController {
      * @param modelMap
      * @return
      */
+    @Operation(summary = "게시물 등록", description = "제목(title)과 내용(content)을 이용하여 게시물을 신규 등록합니다.")
     @PostMapping("/testExcel")
     public Object testExcel(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
         OnBridOnamsData excelParamData = new OnBridOnamsData();
