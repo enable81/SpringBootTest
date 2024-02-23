@@ -1,12 +1,8 @@
 package com.onbrid.test.springboot.springboottest.excel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
-import com.onbrid.test.springboot.springboottest.service.TestAService;
-import com.onbrid.test.springboot.springboottest.service.TestService;
 import com.onbrid.test.springboot.springboottest.service.excute.OnAMSServiceInvoker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +33,6 @@ public class ExcelService {
      * [구버전]   EXCELCOLUMNS = [{ASSETNO: 재물번호}, {ASSETNAME: 재물명}]<br/>
      * [api/v1] EXCELCOLUMNS = [{KEY: ASSETNO, HEADER: 재물번호, TYPE: NUM(INT)|FLT(FLOAT,DOUBLE, DBL)|STRING(STR)|DATE(DT)}, {KEY: ASSETNAME, HEADER: 재물명, TYPE:STRING}]<br/>
      * @param onBridOnamsData {EXCELCOLUMNS:[], 조회 조건1: "", 조회 조건2: ""  }
-     * @return
-     * @throws JsonProcessingException
      */
     public SXSSFWorkbook commonExcelFile(OnBridOnamsData onBridOnamsData) {
         log.debug("ExcelService.onBridOnamsData: {}", onBridOnamsData.toString());
@@ -63,7 +57,7 @@ public class ExcelService {
         workbook = new SXSSFWorkbook();
         workbook.setCompressTempFiles(true);
 
-        SXSSFSheet sheet = (SXSSFSheet) workbook.createSheet(String.valueOf(onBridOnamsData.getParamMap().get(OnBridProperties.EXCEL.EXCEL_FILE_NAME)));
+        SXSSFSheet sheet = workbook.createSheet(String.valueOf(onBridOnamsData.getParamMap().get(OnBridProperties.EXCEL.EXCEL_FILE_NAME)));
         sheet.setRandomAccessWindowSize(3000);    // 메모리 행 3000개로 제한, 초과 시 Disk로 Flush
 
         List<Map> columns = onBridOnamsData.getExcelColumns();

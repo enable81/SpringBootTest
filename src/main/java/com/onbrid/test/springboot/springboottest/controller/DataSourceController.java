@@ -28,7 +28,7 @@ public class DataSourceController {
     }
 
     @GetMapping("/onams")
-    public List<Map<?, ?>> onamsData() {
+    public List<Map> onamsData() {
 
         onamsDao.queryForList("SELECT_TEST");
         onamsDao.customMethod();
@@ -36,7 +36,7 @@ public class DataSourceController {
     }
 
     @GetMapping("/douzone")
-    public Map<?, ?> oracleData() {
+    public Map oracleData() {
         osDao.queryForList("SELECT_TEST");
         osDao.customMethod();
 

@@ -1,11 +1,9 @@
 package com.onbrid.test.springboot.springboottest.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.onbrid.test.springboot.springboottest.handler.OnamsHttpMessageConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,7 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
     /**
      * (Cross-Origin Resource Sharing,CORS) 란 다른 출처의 자원을 공유할 수 있도록 설정하는 권한 체제를 말합니다.
      * <a href="https://dev-pengun.tistory.com/entry/Spring-Boot-CORS-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0">[Spring Boot] CORS 설정하기</a>
-     * @param registry
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {

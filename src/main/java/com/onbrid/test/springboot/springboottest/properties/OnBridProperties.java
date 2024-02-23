@@ -4,7 +4,7 @@ public class OnBridProperties {
 
     public static final int ERROR_CODE_FAIL_VALUE = -99999;  //에러  발생 시 에러 코드  값  셋팅
 
-    public final class PARAM {
+    public static final class PARAM {
 
         public static final String SERVICE_BEAN_NAME = "serviceBeanName";
         public static final String METHOD_NAME = "methodName";
@@ -13,7 +13,7 @@ public class OnBridProperties {
         public static final String EXCEL_MODEL_MAP = "EXCEL_MODEL_MAP";
     }
 
-    public final class EXCEL {
+    public static final class EXCEL {
         /**
          * Excel File Name 은 확장자 뺀 파일이름만<br>
          * 예: 재물목록
