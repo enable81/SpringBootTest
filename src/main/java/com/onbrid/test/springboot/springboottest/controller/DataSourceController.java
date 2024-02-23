@@ -2,19 +2,19 @@ package com.onbrid.test.springboot.springboottest.controller;
 
 import com.onbrid.test.springboot.springboottest.dao.OnamsDao;
 import com.onbrid.test.springboot.springboottest.dao.OtherSystemDao;
+import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @Slf4j
-//@RequestMapping("/api/v1")
+@RequestMapping("/api/v1")
 public class DataSourceController {
 
     OnamsDao onamsDao;
@@ -28,7 +28,7 @@ public class DataSourceController {
     }
 
     @GetMapping("/onams")
-    public List onamsData() {
+    public List<Map<?, ?>> onamsData() {
 
         onamsDao.queryForList("SELECT_TEST");
         onamsDao.customMethod();
@@ -36,7 +36,7 @@ public class DataSourceController {
     }
 
     @GetMapping("/douzone")
-    public Map oracleData() {
+    public Map<?, ?> oracleData() {
         osDao.queryForList("SELECT_TEST");
         osDao.customMethod();
 

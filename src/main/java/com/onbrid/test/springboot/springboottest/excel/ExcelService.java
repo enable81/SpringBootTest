@@ -2,6 +2,7 @@ package com.onbrid.test.springboot.springboottest.excel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import com.onbrid.test.springboot.springboottest.service.TestAService;
@@ -15,6 +16,7 @@ import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -40,27 +42,23 @@ public class ExcelService {
      */
     public SXSSFWorkbook commonExcelFile(OnBridOnamsData onBridOnamsData) {
         log.debug("ExcelService.onBridOnamsData: {}", onBridOnamsData.toString());
-        log.debug("ExcelService.onBridOnamsData.ExcelColumns: {}", onBridOnamsData.getExcelColumns());
+
         // 데이터 조회
-        // 데이터가 있을 때만 만든다.??
-        List<Map> datas;
-//        Map item;
-//        for (int k=0; k<100000; k++) {
-//            item = new HashMap();
-//            item.put("ASSETNO", "A-" + k);
-//            item.put("ASSETNAME", "AN-" + k);
-//            datas.add(item);
-//        }
-        // TEST
-        // 이건 서비스를 계속 주입해줘야함...
-        //datas = testService.selectTestBigData(onBridOnamsData);
-
-        //DispatcherServlet 이 만든 context 이외에 application root context 도 있을 경우엔 root context 를 가져온다.
-        WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(onBridOnamsData.getRequest().getSession().getServletContext());
-        //service bean 가져오기.
-        Object bean = wac.getBean(String.valueOf("testService"));
-        datas = (List<Map>) OnAMSServiceInvoker.invoke(bean, "selectTestBigData", onBridOnamsData);
-
+        List<Map> datas = null;
+        try {
+            WebApplicationContext wac = WebApplicationContextUtils.getWebApplicationContext(onBridOnamsData.getRequest().getSession().getServletContext());
+            Object bean = wac.getBean(String.valueOf(onBridOnamsData.getParamMap().get(OnBridProperties.PARAM.SERVICE_BEAN_NAME)));
+            datas = (List<Map>) OnAMSServiceInvoker.invoke(bean, String.valueOf(onBridOnamsData.getParamMap().get(OnBridProperties.PARAM.METHOD_NAME)), onBridOnamsData);
+            if (datas == null || datas.size() < 1) {
+                throw new OnBridException(-999999, "엑셀 다운로드 에러", "엑셀 다운로드할 데이테가 없습니다.");
+            }
+        } catch (NoSuchBeanDefinitionException nsb) {
+            nsb.printStackTrace();
+            throw new OnBridException(-999999, "엑셀 다운로드 에러", "엑셀다운로드시 데이터를 조회할 Bean정보가 없습니다.");
+        } catch (OnBridException on) {
+            on.printStackTrace();
+            throw new OnBridException(-999999, "엑셀 다운로드 에러", on.getMessage());
+        }
 
         workbook = new SXSSFWorkbook();
         workbook.setCompressTempFiles(true);
@@ -69,9 +67,11 @@ public class ExcelService {
         sheet.setRandomAccessWindowSize(3000);    // 메모리 행 3000개로 제한, 초과 시 Disk로 Flush
 
         List<Map> columns = onBridOnamsData.getExcelColumns();
-        if (!columns.get(0).containsKey(COLUMN_KEY)) {
+        if (columns != null && !columns.get(0).containsKey(COLUMN_KEY)) {
             // excel 컬럼명 설정
             columns = this.setColumnsData(columns);
+        } else {
+            columns = this.setColumnsData(datas.get(0));
         }
         // 1. Title 생성
         // setTitle(sheet, model);
@@ -84,7 +84,6 @@ public class ExcelService {
         setData(sheet, columns, datas);
 
         return workbook;
-
     }
 
 
@@ -161,7 +160,9 @@ public class ExcelService {
         }
     }
 
-
+    /**
+     * 컬럼생성 : 사용자정의 컬럼 생성
+     */
     private List<Map> setColumnsData(List<Map> paramColums){
         List<Map> columns = new ArrayList<>();
         Map col;
@@ -187,9 +188,24 @@ public class ExcelService {
     /**
      * 컬럼생성 : 데이터를 기준으로 컬럼 생성
      */
-    /*private void setColumnsData(List<Map> columns, List<Map> rows){
+    private List<Map> setColumnsData(Map row){
+        List<Map> columns = new ArrayList<>();
+        Map col;
+        String key;
+        Iterator<String> it = row.keySet().iterator();
+        while( it.hasNext() ){
+            key  =   it.next();
+            if( !key.equalsIgnoreCase("NUM") ){
+                col =   new HashMap();
+                col.put( this.COLUMN_KEY , key);
+                col.put( this.COLUMN_HEADER, key);
+                columns.add(col);
 
-    }*/
+            }
+        }
+
+        return columns;
+    }
 
 
     public CellStyle getFontStyle( CellStyle cellStyle, int fontSize, boolean boldYn ) {

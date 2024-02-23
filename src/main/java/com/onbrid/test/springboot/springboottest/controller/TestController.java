@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -23,43 +24,29 @@ import java.util.List;
 import java.util.Map;
 
 @Tag(name = "Test-Controller", description = "API 테스트 컨트롤러 입니다.")
-@RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/test/v1")
+@RestController
 public class TestController {
 
     // final로 생성된 변수는 롬복이(@RequiredArgsConstructor) 알아서 생성자를 만들어준다.
-    // 따라서 스프링에 생성자 주입방식으로 인젝션된다. @Autowired 해결 
-    final TestService testService;
-
+    // 따라서 스프링에 생성자 주입방식으로 인젝션된다. @Autowired 해결
     final ExcelService excelService;
 
-    @GetMapping("/test")
-    public String test() {
-        // TRACE > DEBUG > INFO > WARN > ERROR
-        log.trace("TRACE");
-        log.debug("DEBUG");
-        log.info("INFO");
-        log.warn("WARN");
-        log.error("ERROR");
-
-        return "log test";
-    }
 
     /**
      * 엑셀 파일 다운로드 테스트
-     * @param request
-     * @param response
-     * @param modelMap
-     * @return
      */
-    @Operation(summary = "게시물 등록", description = "제목(title)과 내용(content)을 이용하여 게시물을 신규 등록합니다.")
-    @PostMapping("/testExcel")
-    public Object testExcel(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    @Operation(summary = "엑셀 다운로드 테스트")
+    @PostMapping("/excelDownload")
+    public Object excelDownload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
         OnBridOnamsData excelParamData = new OnBridOnamsData();
 
         Map paramMap = new HashMap();
-        paramMap.put("excelFileName", "TestExce한글_123!@#$");
+        paramMap.put(OnBridProperties.PARAM.SERVICE_BEAN_NAME, "testService");
+        paramMap.put(OnBridProperties.PARAM.METHOD_NAME, "selectTestBigData");
+        paramMap.put(OnBridProperties.EXCEL.EXCEL_FILE_NAME, "TestExce한글_123!@#$");
         excelParamData.setParamMap(paramMap);
 
         List<Map> excelCols = new ArrayList<>();
@@ -122,11 +109,24 @@ public class TestController {
         excelCols.add(col);
         excelParamData.setExcelColumns(excelCols);
 
-
         modelMap.put(OnBridProperties.PARAM.EXCEL_MODEL_MAP, excelParamData);
 
         return new OnamsExcelDownView(excelService);
 
     }
 
+
+
+    @GetMapping("/log")
+    public String logTest() {
+        // TRACE > DEBUG > INFO > WARN > ERROR
+        log.trace("TRACE");
+        log.debug("DEBUG");
+        log.info("INFO");
+        log.warn("WARN");
+        log.error("ERROR");
+
+        return "log test";
+    }
 }
+

@@ -7,14 +7,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootTestApplication {
 
     // TODO: Exception ㅊㅓ리
-    // TODO: Message param 처리..
+    // TODO:   - 전체적인(컨트롤러 말고)에러 를 받아줄 에러랜들러  BasicErrorController ??
+    // Message param 처리..
     // TODO: JWT / security
     // TODO: file upload/download
-    // TODO: excel
+    // excel
     // TODO: report
 
-    // TODO: log..
-    // TODO: root cause stack 을 DB에 저장.
+    // log..
+    // TODO: root cause stack log을 DB에 저장.
 
     // TODO: Project 모듈화 구성.
     // TODO: gradle 빌드.

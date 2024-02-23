@@ -76,9 +76,9 @@ public class OnamsController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    // @CrossOrigin(origins = "http://localhost:8080") 일지적인 크로스 도메인 허용
     @RequestMapping(path = "/fileService/excelDownload")
-    public Object excelDownload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public Object excelDownload(HttpServletRequest request, ModelMap modelMap) {
         JsonRequestDataReader requestDataReader = new JsonRequestDataReader(request);
         OnBridOnamsData excelParamData = requestDataReader.getOnBridOnamsData();
 
