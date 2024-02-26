@@ -13,12 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -79,14 +77,24 @@ public class OnamsController {
 
 
     // @CrossOrigin(origins = "http://localhost:8080") 일지적인 크로스 도메인 허용
-    @RequestMapping(path = "/fileService/excelDownload")
-    public Object excelDownload(HttpServletRequest request, ModelMap modelMap) {
+    @PostMapping(path = "/fileService/downloadExcel")
+    public Object downloadExcel(HttpServletRequest request, ModelMap modelMap) {
         JsonRequestDataReader requestDataReader = new JsonRequestDataReader(request);
-        OnBridOnamsData excelParamData = requestDataReader.getOnBridOnamsData();
+        OnBridOnamsData onBridOnamsData = requestDataReader.getOnBridOnamsData();
 
-        modelMap.put(OnBridProperties.PARAM.EXCEL_MODEL_MAP, excelParamData);
+        modelMap.put(OnBridProperties.PARAM.EXCEL_MODEL_MAP, onBridOnamsData);
 
         return new OnamsExcelDownView(excelService);
     }
 
+
+
+    @PostMapping(path = "/fileService/downloadFile")
+    public Object downloadFile(HttpServletRequest request) {
+        JsonRequestDataReader requestDataReader = new JsonRequestDataReader(request);
+        OnBridOnamsData onBridOnamsData = requestDataReader.getOnBridOnamsData();
+
+
+        return onBridOnamsData;
+    }
 }

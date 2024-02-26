@@ -46,7 +46,7 @@ public class JsonRequestDataReader {
                 }
             }
         } catch (Exception e) {
-            throw new JsonParsingException("[RequestBodyDataReader] - " + e.getMessage(), e);
+            // throw new JsonParsingException("[RequestBodyDataReader] - " + e.getMessage(), e);
         }
 
         log.debug("JsonRequestDataReader.dataSetMap: {}", dataSetMap.toString());

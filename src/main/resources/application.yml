@@ -12,9 +12,9 @@ spring:
       enabled: false
   file:
     path:
-      window: c:\\onbrid\\onams\\data
-      mac: /Users/onbrid/onams/data
-      unix: /data/
+      window: 'C:\\ONAMS_FILE\\'
+      mac: '/Users/onbrid/ONAMS_FILE'
+      unix: '/data/ONAMS_FILE/'
 
 # oracle, maria
 database:

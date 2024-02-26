@@ -1,20 +1,27 @@
 package com.onbrid.test.springboot.springboottest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.excel.ExcelService;
 import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
+import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
+import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
+import com.onbrid.test.springboot.springboottest.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +39,25 @@ public class TestController {
     // 따라서 스프링에 생성자 주입방식으로 인젝션된다. @Autowired 해결
     final ExcelService excelService;
 
+    final FileService fileService;
+
+
+
+    @PostMapping(path = "/fileService/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Object uploldFile(HttpServletRequest request,
+                             @Parameter(description = "File to upload", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
+                             @RequestPart(value = "files") List<MultipartFile> multipartFiles,
+                             @RequestParam("UNIVNO") String paramStr) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map paramMap;
+        try {
+            paramMap = objectMapper.readValue(paramStr, Map.class);
+        } catch (JsonProcessingException e) {
+            throw new JsonParsingException("[업로드파일] - 파라미터가 Json String 형식이 아닙니다.", e);
+        }
+
+        return fileService.writeFile(multipartFiles, paramMap);
+    }
 
     /**
      * 엑셀 파일 다운로드 테스트
