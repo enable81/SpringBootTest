@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,11 @@ public class FileService extends OnamsService {
 
     public OnBridOnamsData writeFile(HttpServletRequest request, List<MultipartFile> files, Map paramMap) {
         log.debug("ParamMap: {}", paramMap);
-
-        List<FileInfo> fileInfos = fileUtil.saveFile(files, paramMap);
-
+        StringBuilder sbPath = new StringBuilder();
+        sbPath.append(paramMap.get("UNIVNO")).append(File.separator)
+                .append(paramMap.get("CAMPUSNO")).append(File.separator)
+                .append(paramMap.get("CATEGORY"));
+        List<FileInfo> fileInfos = fileUtil.saveFile(files, sbPath.toString());
 
         return null;
     }

@@ -27,25 +27,25 @@ public class FileUtil {
     final FilePathProperties filePathProperties;
 
 
-    public List<FileInfo> saveFile(final List<MultipartFile> multipartFiles, ) {
+    public List<FileInfo> saveFile(final List<MultipartFile> multipartFiles, String uploadPath) {
         List<FileInfo> files = new ArrayList<>();
         for (MultipartFile multipartFile: multipartFiles) {
             if (multipartFile.isEmpty()) {
                 continue;
             }
-            files.add(saveFile(multipartFile, paramMap));
+            files.add(saveFile(multipartFile, uploadPath));
         }
         return files;
     }
 
-    public FileInfo saveFile(final MultipartFile multipartFile, Map paramMap) {
+    public FileInfo saveFile(final MultipartFile multipartFile, String uploadPath) {
         if (multipartFile.isEmpty()) {
             return null;
         }
         //
         String namer = generateSaveFilename(multipartFile.getOriginalFilename());
-        String savePath = getUploadPath( "./ONAMS_FILE");
-        Path saveFile = Paths.get(savePath + File.separator + namer);
+        String systemPath = getUploadPath( "./ONAMS_FILE");
+        Path saveFile = Paths.get(systemPath + File.separator + uploadPath + File.separator + namer);
         log.debug("savePath: {}", saveFile.toAbsolutePath());
 
         try {
@@ -55,9 +55,9 @@ public class FileUtil {
         }
 
         return FileInfo.builder()
-                .name(multipartFile.getOriginalFilename())
-                .namer(namer)
-                .fileSize(multipartFile.getSize())
+//                .name(multipartFile.getOriginalFilename())
+//                .namer(namer)
+//                .fileSize(multipartFile.getSize())
                 .build();
     }
 

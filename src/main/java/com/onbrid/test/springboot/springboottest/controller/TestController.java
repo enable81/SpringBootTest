@@ -7,6 +7,7 @@ import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
+import com.onbrid.test.springboot.springboottest.model.FileInfo;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import com.onbrid.test.springboot.springboottest.service.FileService;
@@ -24,6 +25,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,11 +50,12 @@ public class TestController {
     public Object uploldFile(HttpServletRequest request,
                              @Parameter(description = "File to upload", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
                              @RequestPart(value = "files") List<MultipartFile> multipartFiles,
-                             @RequestParam("UNIVNO") String paramStr) {
+                             @Parameter(name = "info", example = "{\"univNo\":\"0001\"}") @RequestParam String info) {
+        log.debug("info: {}", info);
         ObjectMapper objectMapper = new ObjectMapper();
-        Map paramMap;
+        FileInfo fileInfo;
         try {
-            paramMap = objectMapper.readValue(paramStr, Map.class);
+            fileInfo = objectMapper.readValue(info, FileInfo.class);
         } catch (JsonProcessingException e) {
             throw new JsonParsingException("[업로드파일] - 파라미터가 Json String 형식이 아닙니다.", e);
         }
@@ -60,7 +63,9 @@ public class TestController {
             throw new OnBridException(-999999, "[업로드파일] - 첨부파일이 없습니다.");
         }
 
-        return fileService.writeFile(request, multipartFiles, paramMap);
+        log.debug(fileInfo.toString());
+
+        return null; //fileService.writeFile(request, multipartFiles, fileInfo);
     }
 
     /**
