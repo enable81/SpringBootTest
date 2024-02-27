@@ -1,5 +1,6 @@
 package com.onbrid.test.springboot.springboottest.properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,9 @@ public class FilePathProperties {
     private String window;
     private String mac;
     private String unix;
+
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     public String getWindow() {
         return window;
@@ -53,15 +57,23 @@ public class FilePathProperties {
 
 
     public String getFilePath(){
-
-        if( OS.indexOf("win") != -1 ){
+        if (OS.indexOf("win") != -1) {
             return window;
-        }else if( OS.indexOf("mac") != -1 ){
+        } else if (OS.indexOf("mac") != -1) {
             return mac;
-        }else if( OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0  ){
+        } else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0) {
             return unix;
-        }else {
+        } else {
             return "/";
+        }
+    }
+
+    public String getFilePath(String localPath){
+        if ("local".equals(profile) ||
+                "dev".equals(profile)) {
+            return localPath;
+        } else {
+            return getFilePath();
         }
     }
 }

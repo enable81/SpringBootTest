@@ -67,14 +67,9 @@ public class ExcelService {
         } else {
             columns = this.setColumnsData(datas.get(0));
         }
-        // 1. Title 생성
-        // setTitle(sheet, model);
-        // sheet.createRow(sheet.getLastRowNum() + 1);         // Last Row
-
-        // 2. 헤더 생성
+        // 헤더 생성
         setHeader(sheet, columns);
-
-        // 3. Data 생성
+        // Data 생성
         setData(sheet, columns, datas);
 
         return workbook;

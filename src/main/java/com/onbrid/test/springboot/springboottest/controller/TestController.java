@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onbrid.test.springboot.springboottest.excel.ExcelService;
 import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
+import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
@@ -55,8 +56,11 @@ public class TestController {
         } catch (JsonProcessingException e) {
             throw new JsonParsingException("[업로드파일] - 파라미터가 Json String 형식이 아닙니다.", e);
         }
+        if (multipartFiles.size() < 1) {
+            throw new OnBridException(-999999, "[업로드파일] - 첨부파일이 없습니다.");
+        }
 
-        return fileService.writeFile(multipartFiles, paramMap);
+        return fileService.writeFile(request, multipartFiles, paramMap);
     }
 
     /**
@@ -153,4 +157,3 @@ public class TestController {
         return "log test";
     }
 }
-

@@ -21,6 +21,11 @@ Swagger ui 라이브러리를 사용하여 api 테스트
 
 
 
+### File
+* [스프링 부트(Spring Boot) 게시판 - 다중 첨부파일 업로드하기](https://congsong.tistory.com/39)
+* [[SpringBoot] Multipart 파일 Upload & Download](https://sjh9708.tistory.com/94)
+* [[SpringBoot] 파일 업로드 처리](https://velog.io/@gun_123/java-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C-%EC%B2%98%EB%A6%AC)
+
 
 
 

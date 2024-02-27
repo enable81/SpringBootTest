@@ -18,12 +18,15 @@ public class SpringBootTestApplication {
     // TODO:   - 전체적인(컨트롤러 말고)에러 를 받아줄 에러랜들러  BasicErrorController ??
     // Message param 처리..
     // TODO: JWT / security
-    // TODO: file upload/download
+    // TODO: file upload = 테이블부터 개선 할 필요가 있는듯.
+    //            download
     // excel
     // TODO: report
 
     // log..
     // TODO: root cause stack log을 DB에 저장.
+
+    // TODO: mybatis useGeneratedKeys
 
     // TODO: Project 모듈화 구성.
     // TODO: gradle 빌드.
