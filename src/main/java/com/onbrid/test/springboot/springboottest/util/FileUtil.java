@@ -6,14 +6,18 @@ import com.onbrid.test.springboot.springboottest.properties.FilePathProperties;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +27,8 @@ import java.util.UUID;
 @Slf4j
 @Component
 public class FileUtil {
+
+    private final String LOCAL_PATH = "./ONAMS_FILE";
 
     final FilePathProperties filePathProperties;
 
@@ -44,7 +50,7 @@ public class FileUtil {
         }
         //
         String namer = generateSaveFilename(multipartFile.getOriginalFilename());
-        String systemPath = getUploadPath( "./ONAMS_FILE");
+        String systemPath = getUploadPath(LOCAL_PATH);
         Path saveFile = Paths.get(systemPath + File.separator + uploadPath + File.separator + namer);
         log.debug("savePath: {}", saveFile.toAbsolutePath());
 
@@ -61,6 +67,24 @@ public class FileUtil {
                 .build();
     }
 
+    /**
+     * 다운로드할 첨부파일(리소스) 조회 (as Resource)
+     * @param uploadPath 업로드 경로
+     * @param fileName 파일명
+     * @return 첨부파일(리소스)
+     */
+    public Resource readFileAsResource(String uploadPath, String fileName) {
+        Path filePath = Paths.get(filePathProperties.getFilePath(LOCAL_PATH), uploadPath, fileName);
+        try {
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() == false || resource.isFile() == false) {
+                throw new RuntimeException("file not found : " + filePath.toString());
+            }
+            return resource;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("file not found : " + filePath.toString());
+        }
+    }
 
     private String generateSaveFilename(final String filename) {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
