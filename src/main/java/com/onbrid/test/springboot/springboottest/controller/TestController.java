@@ -6,7 +6,6 @@ import com.onbrid.test.springboot.springboottest.excel.ExcelService;
 import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
-import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
 import com.onbrid.test.springboot.springboottest.model.FileInfo;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
@@ -14,19 +13,20 @@ import com.onbrid.test.springboot.springboottest.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -47,6 +47,7 @@ public class TestController {
 
     final FileService fileService;
 
+    final JavaMailSender emailSender;
 
 
     @PostMapping(path = "/fileService/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -175,6 +176,37 @@ public class TestController {
 
     }
 
+
+    @GetMapping("/sendEmail")
+    public String sendEmail() throws Exception {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        //메일 제목 설정
+        helper.setSubject("[한국꼬똥켄넬]2024 종친회 입장 QR코드 송부");
+
+        //참조자 설정
+        helper.setCc("kungyi01@naver.com");
+
+        helper.setText("입장코드전송 https://chart.apis.google.com/chart?cht=qr&chs=250x250&chl=Qedfl=341dfwd", false);
+
+        helper.setFrom("coton.membership@gmail.com");
+
+        //첨부 파일 설정
+        // String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        // helper.addAttachment(MimeUtility.encodeText(fileName, "UTF-8", "B"), new ByteArrayResource(IOUtils.toByteArray(file.getInputStream())));
+
+        //수신자 개별 전송
+//        for(String s : mailDto.getAddress()) {
+//        	helper.setTo(s);
+//        	emailSender.send(message);
+//        }
+        //수신자 한번에 전송
+        helper.setTo("dkqor@naver.com");
+        emailSender.send(message);
+        log.info("mail multiple send complete.");
+
+        return "sendEmailTest";
+    }
 
 
     @GetMapping("/log")

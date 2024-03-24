@@ -11,10 +11,14 @@ public class JasyptTest {
         String id = "onams";
         String password = "onbrid8845";
         String url = "jdbc:log4jdbc:mariadb://localhost:43306/ONAMS?allowMultiQueries=true&autocommit=false";
+        String email = "coton.membership@gmail.com";
+        String emailpw = "lnbl shpo pgiq ganh";
 
         System.out.println(jasyptEncoding(id));
         System.out.println(jasyptEncoding(password));
         System.out.println(jasyptEncoding(url));
+        System.out.println(jasyptEncoding(email));
+        System.out.println(jasyptEncoding(emailpw));
     }
 
     public String jasyptEncoding(String value) {

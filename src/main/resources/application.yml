@@ -16,6 +16,26 @@ spring:
       mac: '/Users/onbrid/ONAMS_FILE'
       unix: '/data/ONAMS_FILE/'
 
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(Q5r9cEPK1DJQmMTdVLjUY7BGWRWtt5BxQ4yDtaKQDUfHYZddBh4zIw==)
+    password: ENC(yL7a9I8OzhMv7aAdL6i6Ce0656OEBRghmkOGHn6SeTE=)
+    properties:
+      mail:
+        debug: true
+        transport:
+          protocol: smtp
+        mime:
+          charset: UTF-8
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+
 # oracle, maria
 database:
   mapper-dir:
@@ -34,6 +54,7 @@ mybatis:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
+
 
 # Logback 설정
 logging:
