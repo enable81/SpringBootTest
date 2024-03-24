@@ -2,6 +2,7 @@ package com.onbrid.test.springboot.springboottest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.onbrid.test.springboot.springboottest.config.JasyptConfig;
 import com.onbrid.test.springboot.springboottest.excel.ExcelService;
 import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -49,6 +51,7 @@ public class TestController {
 
     final JavaMailSender emailSender;
 
+    final StringEncryptor stringEncryptor;
 
     @PostMapping(path = "/fileService/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Object uploldFile(HttpServletRequest request,
@@ -206,7 +209,7 @@ public class TestController {
         emailSender.send(message);
         log.info("mail multiple send complete.");
 
-        return "sendEmailTest";
+        return stringEncryptor.decrypt("Q5r9cEPK1DJQmMTdVLjUY7BGWRWtt5BxQ4yDtaKQDUfHYZddBh4zIw==");
     }
 
 

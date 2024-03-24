@@ -6,6 +6,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * https://goddaehee.tistory.com/321
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JasyptConfig {
 
+    @Primary
     @Bean("jasyptStringEncryptor")
     public StringEncryptor stringEncryptor() {
 
@@ -30,21 +32,6 @@ public class JasyptConfig {
         encryptor.setConfig(config);
 
         return encryptor;
-    }
-
-
-    public static void main(String[] args) {
-
-        String key = "f64dafe8c33d8e1560c3c6bce728d5b9f26ea4e9a9a075eb469b7ae3ab6065cb";
-        StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
-        pbeEnc.setAlgorithm("PBEWITHMD5ANDDES");
-        pbeEnc.setPassword(key);
-
-        String id = "ONAMS";
-        String password = "onbrid!8845";
-
-        System.out.println(pbeEnc.encrypt(id));
-        System.out.println(pbeEnc.encrypt(password));
     }
 
 }

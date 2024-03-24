@@ -19,6 +19,7 @@ public class JasyptTest {
         System.out.println(jasyptEncoding(url));
         System.out.println(jasyptEncoding(email));
         System.out.println(jasyptEncoding(emailpw));
+        System.out.println(jasyptDecoding(jasyptEncoding(email)));
     }
 
     public String jasyptEncoding(String value) {
@@ -28,5 +29,11 @@ public class JasyptTest {
         pbeEnc.setPassword(key);
         return pbeEnc.encrypt(value);
     }
-
+    public String jasyptDecoding(String value) {
+        String key = "f64dafe8c33d8e1560c3c6bce728d5b9f26ea4e9a9a075eb469b7ae3ab6065cb";
+        StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
+        pbeEnc.setAlgorithm("PBEWITHMD5ANDDES");
+        pbeEnc.setPassword(key);
+        return pbeEnc.decrypt(value);
+    }
 }
