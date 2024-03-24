@@ -187,7 +187,8 @@ public class TestController {
         //참조자 설정
         helper.setCc("kungyi01@naver.com");
 
-        helper.setText("입장코드전송 https://chart.apis.google.com/chart?cht=qr&chs=250x250&chl=Qedfl=341dfwd", false);
+        helper.setText("입장코드전송\n " +
+                "https://chart.apis.google.com/chart?cht=qr&chs=250x250&chl=Qedfl=341dfwd", false);
 
         helper.setFrom("coton.membership@gmail.com");
 
