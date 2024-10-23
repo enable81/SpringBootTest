@@ -1,5 +1,6 @@
-package com.onbrid.test.springboot.springboottest.excel;
+package com.onbrid.test.springboot.springboottest.view;
 
+import com.onbrid.test.springboot.springboottest.excel.ExcelService;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ public class OnamsExcelDownView extends AbstractView {
 
         // ExcelFileName
         String FILE_NM = String.valueOf(onBridOnamsData.getParamMap().get(OnBridProperties.EXCEL.EXCEL_FILE_NAME));
-        if (FILE_NM.trim().isEmpty()) {
+        if ("null".equals(FILE_NM.trim())) {
             FILE_NM = "OnAMS_Excel";
         }
         FILE_NM += ".xlsx";

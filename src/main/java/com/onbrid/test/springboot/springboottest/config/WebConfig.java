@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+//public class WebConfig extends WebMvcConfigurationSupport {
 
     final ObjectMapper objectMapper;
 
@@ -30,6 +33,12 @@ public class WebConfig implements WebMvcConfigurer {
                 // .allowCredentials(false)            // 쿠키 요청을 허용한다(다른 도메인 서버에 인증하는 경우에만 사용해야하며, true 설정시 보안상 이슈가 발생할 수 있다)
                 ;
     }
+
+
+//    @Override
+//    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> handlers) {
+//        handlers.add()
+//    }
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {

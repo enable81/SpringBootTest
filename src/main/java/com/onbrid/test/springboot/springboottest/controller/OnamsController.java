@@ -2,7 +2,7 @@ package com.onbrid.test.springboot.springboottest.controller;
 
 
 import com.onbrid.test.springboot.springboottest.excel.ExcelService;
-import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
+import com.onbrid.test.springboot.springboottest.view.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.interceptor.JsonRequestDataReader;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
@@ -16,7 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Slf4j

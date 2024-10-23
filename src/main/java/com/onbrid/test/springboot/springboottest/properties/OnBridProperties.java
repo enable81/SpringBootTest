@@ -11,6 +11,10 @@ public class OnBridProperties {
         public static final String LIST = "list";
         public static final String REQUEST_READER = "REQUEST_READER";
         public static final String EXCEL_MODEL_MAP = "EXCEL_MODEL_MAP";
+
+
+        public static final String FILE_PATH = "PATH";
+        public static final String FILE_NAME = "NAME";
     }
 
     public static final class EXCEL {
