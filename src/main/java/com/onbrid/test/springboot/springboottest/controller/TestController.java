@@ -2,15 +2,14 @@ package com.onbrid.test.springboot.springboottest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.onbrid.test.springboot.springboottest.config.JasyptConfig;
 import com.onbrid.test.springboot.springboottest.excel.ExcelService;
-import com.onbrid.test.springboot.springboottest.excel.OnamsExcelDownView;
 import com.onbrid.test.springboot.springboottest.exception.JsonParsingException;
 import com.onbrid.test.springboot.springboottest.exception.OnBridException;
 import com.onbrid.test.springboot.springboottest.model.FileInfo;
 import com.onbrid.test.springboot.springboottest.model.OnBridOnamsData;
 import com.onbrid.test.springboot.springboottest.properties.OnBridProperties;
 import com.onbrid.test.springboot.springboottest.service.FileService;
+import com.onbrid.test.springboot.springboottest.view.OnamsExcelDownView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -102,6 +101,7 @@ public class TestController {
     /**
      * 엑셀 파일 다운로드 테스트
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Operation(summary = "엑셀 다운로드 테스트")
     @PostMapping("/excelDownload")
     public Object excelDownload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
@@ -195,7 +195,7 @@ public class TestController {
 
         helper.setFrom("coton.membership@gmail.com");
 
-        //첨부 파일 설정
+        //첨부 파일 설정∏
         // String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         // helper.addAttachment(MimeUtility.encodeText(fileName, "UTF-8", "B"), new ByteArrayResource(IOUtils.toByteArray(file.getInputStream())));
 
